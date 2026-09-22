@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    # branches:
+    #   -main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: setup Node.js(Runtime Node env)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      - name: set up pnpm(package manager)
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.4.1
+
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: run tests
+        run: pnpm test
+
+      - name: build application
+        run: pnpm run build
+
+        
