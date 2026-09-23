@@ -31,3 +31,8 @@ jobs:
       - name: build application
         run: pnpm run build
 
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nestjs-build
+          path: dist/
