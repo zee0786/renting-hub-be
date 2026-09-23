@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  pull_request:
     # branches:
     #   -main
 jobs:
@@ -30,4 +31,3 @@ jobs:
       - name: build application
         run: pnpm run build
 
-        
