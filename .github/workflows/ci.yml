@@ -36,3 +36,12 @@ jobs:
         with:
           name: nestjs-build
           path: dist/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nestjs-build
+          path: dist/
