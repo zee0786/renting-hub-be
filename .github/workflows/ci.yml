@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+  pull_request:
     # branches:
     #   -main
 jobs:
@@ -30,4 +31,30 @@ jobs:
       - name: build application
         run: pnpm run build
 
-        
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nestjs-build
+          path: dist/
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: nestjs-build
+          path: dist/
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 26
+
+      # - name: Start application
+      #   run: node dist/main.js
+
+      - name: Verify deployment artifact
+        run: |
+          echo "Deployment artifact:"
+          ls -la dist/
